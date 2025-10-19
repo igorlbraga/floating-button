@@ -1,0 +1,617 @@
+/* Reset para evitar conflitos com Elementor */
+.wf8731-container * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.wf8731-container {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.wf8731-online-indicator {
+    position: absolute;
+    bottom: 80px;
+    right: -10px;
+    background: #25D366;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    box-shadow: 0 3px 15px rgba(37, 211, 102, 0.3);
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    animation: wf8731-slideIn 0.5s ease-out 1s both, wf8731-bounce 2s ease-in-out infinite 3s;
+    z-index: 99998;
+    border: none;
+}
+
+.wf8731-online-indicator::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: white;
+    border-radius: 50%;
+    display: inline-block;
+    animation: wf8731-blink 2s infinite;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+}
+
+.wf8731-online-indicator::after {
+    content: '';
+    position: absolute;
+    bottom: -7px;
+    right: 25px;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid #25D366;
+    /* Seta verde WhatsApp */
+}
+
+@media (max-width: 480px) {
+    .wf8731-online-indicator {
+        bottom: 75px
+    }
+}
+
+.wf8731-float {
+    position: fixed;
+    width: 70px;
+    height: 70px;
+    bottom: 30px;
+    right: 30px;
+    background: #25D366;
+    /* Verde WhatsApp para consistência */
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 35px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    z-index: 99999;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: wf8731-float 3s ease-in-out infinite;
+}
+
+.wf8731-float:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.4);
+}
+
+.wf8731-float::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: rgba(37, 211, 102, 0.5);
+    /* Aura verde WhatsApp */
+    box-shadow: 0 0 25px rgba(37, 211, 102, 0.5);
+    animation: wf8731-pulse 1.5s ease-out infinite;
+}
+
+.wf8731-float::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: rgba(37, 211, 102, 0.5);
+    box-shadow: 0 0 30px rgba(37, 211, 102, 0.5);
+    animation: wf8731-pulse 1.5s ease-out infinite 0.75s;
+}
+
+@keyframes wf8731-pulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+        box-shadow: 0 0 20px rgba(37, 211, 102, 0.7);
+    }
+
+    100% {
+        transform: scale(2);
+        opacity: 0;
+        box-shadow: 0 0 40px rgba(37, 211, 102, 0);
+    }
+}
+
+@keyframes wf8731-float {
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Modal do formulário */
+.wf8731-modal {
+    display: none;
+    position: fixed;
+    bottom: 115px;
+    right: 30px;
+    width: 360px;
+    max-width: 90%;
+    max-height: 80vh;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    z-index: 99999;
+    overflow: hidden;
+    animation: wf8731-slideUp 0.4s ease-out;
+}
+
+.wf8731-modal.wf8731-active {
+    display: flex;
+    flex-direction: column;
+}
+
+@keyframes wf8731-slideUp {
+    from {
+        transform: translateY(100px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.wf8731-float.wf8731-no-pulse::before,
+.wf8731-float.wf8731-no-pulse::after {
+    display: none !important;
+    animation: none !important;
+}
+
+/* Header do chat */
+.wf8731-header {
+    background: linear-gradient(135deg, #83B735 0%, #6a9c28 100%);
+    padding: 15px;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+.wf8731-avatar {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #fff 0%, #f0f9e8 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.wf8731-avatar-icon {
+    width: 25px;
+}
+
+.wf8731-status {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.wf8731-status h3 {
+    font-size: 16px;
+    margin-bottom: 2px;
+}
+
+.wf8731-status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+}
+
+.wf8731-status-dot {
+    width: 8px;
+    height: 8px;
+    background: #c4e7c4;
+    border-radius: 50%;
+    animation: wf8731-blink 2s infinite;
+}
+
+@keyframes wf8731-blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.3;
+    }
+}
+
+.wf8731-close {
+    margin-left: auto;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background 0.3s;
+}
+
+.wf8731-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Área de mensagens */
+.wf8731-messages {
+    padding: 15px;
+    background: #f5f5f5;
+    overflow-y: auto;
+    flex: 1;
+    min-height: 80px;
+    max-height: 150px;
+}
+
+.wf8731-message {
+    display: none;
+    background: white;
+    padding: 12px;
+    border-radius: 15px;
+    border-top-left-radius: 0;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-size: 14px;
+}
+
+.wf8731-message.wf8731-show {
+    display: block;
+    animation: wf8731-messageSlide 0.1s ease-out;
+}
+
+.wf8731-typing {
+    display: none;
+    padding: 10px;
+    background: white;
+    border-radius: 15px;
+    width: fit-content;
+    margin-top: 10px;
+}
+
+.wf8731-typing.wf8731-show {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+.wf8731-typing-dot {
+    width: 8px;
+    height: 8px;
+    background: #999;
+    border-radius: 50%;
+    animation: wf8731-typing 1.4s infinite;
+}
+
+.wf8731-typing-dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.wf8731-typing-dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes wf8731-typing {
+
+    0%,
+    60%,
+    100% {
+        transform: translateY(0);
+    }
+
+    30% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Formulário */
+.wf8731-form {
+    padding: 15px;
+    background: white;
+    flex-shrink: 0;
+}
+
+.wf8731-group {
+    margin-bottom: 12px;
+    position: relative;
+}
+
+.wf8731-group:last-of-type {
+    margin-bottom: 15px;
+}
+
+.wf8731-form input {
+    width: 100%;
+    padding: 12px 15px;
+    padding-left: 40px;
+    border: 2px solid #e0e0e0;
+    border-radius: 25px;
+    font-size: 14px;
+    transition: all 0.3s;
+    background: #f8f9fa;
+}
+
+.wf8731-form input::placeholder {
+    color: #999;
+    font-size: 14px;
+}
+
+.wf8731-form input:focus {
+    outline: none;
+    border-color: #83B735;
+    box-shadow: 0 0 0 3px rgba(131, 183, 53, 0.15);
+    background: white;
+}
+
+/* Ícones nos campos */
+.wf8731-group::before {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 14px;
+    width: 16px;
+    height: 16px;
+    background-size: contain;
+    opacity: 0.5;
+    z-index: 1;
+}
+
+.wf8731-group:nth-child(1)::before {
+    content: '👤';
+    font-size: 14px;
+    top: 12px;
+    left: 12px;
+}
+
+.wf8731-group:nth-child(2)::before {
+    content: '✉️';
+    font-size: 14px;
+    top: 13px;
+    left: 12px;
+}
+
+.wf8731-group:nth-child(3)::before {
+    content: '📱';
+    font-size: 14px;
+    top: 12px;
+    left: 12px;
+}
+
+.wf8731-submit {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #83B735 0%, #6a9c28 100%);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.wf8731-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(131, 183, 53, 0.4);
+    background: linear-gradient(135deg, #95c93d 0%, #83B735 100%);
+}
+
+.wf8731-submit:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.wf8731-submit.wf8731-processing {
+    background: linear-gradient(135deg, #FDB813 0%, #F39C12 100%);
+}
+
+.wf8731-submit.wf8731-success {
+    background: linear-gradient(135deg, #5CB85C 0%, #83B735 100%);
+}
+
+.wf8731-spinner {
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: wf8731-spin 1s linear infinite;
+    display: none;
+}
+
+.wf8731-submit.wf8731-processing .wf8731-spinner {
+    display: inline-block;
+}
+
+.wf8731-submit.wf8731-processing .wf8731-btn-text::before {
+    content: "Chamando...";
+}
+
+.wf8731-submit.wf8731-success .wf8731-btn-text::before {
+    content: "Enviado! ✓";
+}
+
+/* Esconder texto original quando processando ou sucesso */
+.wf8731-submit.wf8731-processing .wf8731-btn-text,
+.wf8731-submit.wf8731-success .wf8731-btn-text {
+    font-size: 0;
+}
+
+.wf8731-submit.wf8731-processing .wf8731-btn-text::before,
+.wf8731-submit.wf8731-success .wf8731-btn-text::before {
+    font-size: 15px;
+}
+
+@keyframes wf8731-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Mensagens de erro */
+.wf8731-error {
+    font-size: 11px;
+    margin-top: 5px;
+    margin-left: 15px;
+    display: none;
+    padding: 4px 8px;
+    border-radius: 12px;
+    background: #fef5f5;
+    border-left: 3px solid #dc3545;
+    color: #c92a2a;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 15px;
+    z-index: 10;
+}
+
+.wf8731-error.wf8731-show {
+    display: block;
+    animation: wf8731-slideDown 0.3s ease-out;
+}
+
+.wf8731-form input.wf8731-input-error {
+    border-color: #dc3545;
+    background: #fff5f5;
+    animation: wf8731-shake 0.3s;
+}
+
+@keyframes wf8731-shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-5px);
+    }
+
+    75% {
+        transform: translateX(5px);
+    }
+}
+
+@keyframes wf8731-slideDown {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.wf8731-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #FF4757;
+    color: white;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    animation: wf8731-badgePop 0.3s ease-out;
+    box-shadow: 0 2px 5px rgba(255, 71, 87, 0.3);
+}
+
+@keyframes wf8731-badgePop {
+    0% {
+        transform: scale(0);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.wf8731-error-msg {
+    display: none;
+    padding: 10px;
+    background: linear-gradient(to right, #fef5f5, #ffe0e0);
+    color: #c92a2a;
+    border-left: 3px solid #dc3545;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    animation: wf8731-slideDown 0.3s ease-out;
+}
+
+/* Mensagem de sucesso */
+.wf8731-success-msg {
+    display: none;
+    padding: 10px;
+    background: linear-gradient(to right, #f0f9e8, #e8f5e0);
+    color: #4a6b1e;
+    border-left: 3px solid #83B735;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    animation: wf8731-slideDown 0.3s ease-out;
+}
+
+.wf8731-success-msg.wf8731-show {
+    display: block;
+}
+
+/* Responsivo */
+@media (max-width: 480px) {
+    .wf8731-modal {
+        width: calc(100% - 20px);
+        right: 10px;
+        left: 10px;
+        bottom: 80px;
+        max-height: 70vh;
+    }
+
+    .wf8731-float {
+        width: 60px;
+        height: 60px;
+        bottom: 20px;
+        right: 20px;
+    }
+
+    .wf8731-messages {
+        max-height: 120px;
+    }
+}

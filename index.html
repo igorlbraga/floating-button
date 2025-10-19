@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Floating Button</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="elementor-element elementor-element-db831eb elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list"
+        data-id="db831eb" data-element_type="widget" wf8731="waform_button" data-widget_type="icon-list.default">
+        <div class="elementor-widget-container">
+            <ul class="elementor-icon-list-items">
+                <li class="elementor-icon-list-item">
+                    <a href="tel:3003-7271">
+
+                        <span class="elementor-icon-list-icon">
+                            <i aria-hidden="true" class="fas fa-phone-alt"></i> </span>
+                        <span class="elementor-icon-list-text"> 3003-7271</span>
+                    </a>
+                </li>
+                <li class="elementor-icon-list-item">
+                    <a href="tel:08000020001">
+
+                        <span class="elementor-icon-list-icon">
+                            <i aria-hidden="true" class="fas fa-phone-alt"></i> </span>
+                        <span class="elementor-icon-list-text"> 0800 002 0001</span>
+                    </a>
+                </li>
+                <li class="elementor-icon-list-item">
+                    <a href="https://api.whatsapp.com/send?phone=558000020001&amp;text=Ol%C3%A1%2C%20vim%20do%20site%20e%20estou%20precisando%20de%20uma%20coroa%20de%20flores"
+                        target="_blank">
+
+                        <span class="elementor-icon-list-icon">
+                            <i aria-hidden="true" class="fab fa-whatsapp"></i> </span>
+                        <span class="elementor-icon-list-text">Whatsapp</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="wf8731-container">
+        <!-- Botão flutuante do WhatsApp -->
+        <div class="wf8731-float" id="wf8731Button">
+            <svg viewBox="0 0 24 24" width="35" height="35" fill="currentColor">
+                <path
+                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.149-.67.149-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+            </svg>
+            <span class="wf8731-badge">1</span>
+            <div class="wf8731-online-indicator" id="wf8731OnlineIndicator">
+                Estamos online
+            </div>
+        </div>
+
+        <!-- Modal do chat -->
+        <div class="wf8731-modal" id="wf8731Modal">
+            <div class="wf8731-header">
+                <div class="wf8731-avatar">
+                    <img class="wf8731-avatar-icon"
+                        src="https://nobre-coroa-fotos.s3.us-east-1.amazonaws.com/LOGO%20OFICIAL.png"
+                        alt="Logo da Coroa de Flores">
+                </div>
+                <div class="wf8731-status">
+                    <h3>Floricultura Nobre</h3>
+                    <div class="wf8731-status-indicator">
+                        <span class="wf8731-status-dot"></span>
+                        <span>Online agora</span>
+                    </div>
+                </div>
+                <button class="wf8731-close" id="wf8731CloseBtn">✕</button>
+            </div>
+
+            <div class="wf8731-messages">
+                <div class="wf8731-message" id="wf8731WelcomeMsg">
+                    Estamos disponiveis! 😃 Iremos te chamar agora mesmo para te ajudar com sua coroa de flores. 🙏
+                </div>
+                <div class="wf8731-typing" id="wf8731Typing">
+                    <span class="wf8731-typing-dot"></span>
+                    <span class="wf8731-typing-dot"></span>
+                    <span class="wf8731-typing-dot"></span>
+                </div>
+                <div class="wf8731-error-msg" id="wf8731ErrorMsg"></div>
+                <div class="wf8731-success-msg" id="wf8731SuccessMsg">
+                    ✅ Informações recebidas! Nossos atendentes estão entrando em contato...
+                </div>
+            </div>
+
+            <form class="wf8731-form" id="wf8731Form">
+                <div class="wf8731-group">
+                    <input type="text" id="wf8731Name" name="name" placeholder="Seu nome completo" required>
+                    <span class="wf8731-error" id="wf8731NameError">Nome completo necessário</span>
+                </div>
+                <div class="wf8731-group">
+                    <input type="email" id="wf8731Email" name="email" placeholder="Seu melhor e-mail" required>
+                    <span class="wf8731-error" id="wf8731EmailError">E-mail inválido</span>
+                </div>
+                <div class="wf8731-group">
+                    <input type="tel" id="wf8731Phone" name="whatsapp" placeholder="WhatsApp com DDD" required>
+                    <span class="wf8731-error" id="wf8731PhoneError">Número inválido</span>
+                </div>
+                <input type="hidden" name="87_campaign_data_31_waform">
+                <input type="hidden" name="87_source_data_31_waform">
+                <button type="submit" class="wf8731-submit" id="wf8731Submit">
+                    <span class="wf8731-spinner"></span>
+                    <span class="wf8731-btn-text">Enviar</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
