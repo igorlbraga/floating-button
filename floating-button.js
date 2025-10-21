@@ -1,4 +1,7 @@
-const WEBHOOK_URL = 'https://home.igorbraga.com/api/webhooks/whatsapp-form';
+const WEBHOOK_URL = 'https://app-nobre-coroas-de-flores.vercel.app/api/webhooks/whatsapp-form';
+
+const whatsAppGtmTrigger = document.getElementById("wf8731WhatsAppGtmTrigger")
+const phoneGtmTrigger = document.getElementById("wf8731PhoneGtmTrigger")
 
 const whatsappButton = document.getElementById('wf8731Button');
 const chatModal = document.getElementById('wf8731Modal');
@@ -16,18 +19,37 @@ const welcomeMessage = document.getElementById('wf8731WelcomeMsg');
 // Elementos de validação
 const nameInput = document.getElementById('wf8731Name');
 const emailInput = document.getElementById('wf8731Email');
+const countrySelect = document.getElementById('wf8731CountryCode');
 const whatsappInput = document.getElementById('wf8731Phone');
 const nameError = document.getElementById('wf8731NameError');
 const emailError = document.getElementById('wf8731EmailError');
 const whatsappError = document.getElementById('wf8731PhoneError');
 
+const triggerInput = document.getElementById('wf8731FormTrigger')
+
 const campaignDataInput = document.querySelector('input[name="87_campaign_data_31_waform"]')
 const sourceDataInput = document.querySelector('input[name="87_source_data_31_waform"]')
 
-window.openWf8731Modal = function () {
+window.wf8731Phone = ""
+
+window.openWf8731Modal = function (triggerType) {
     // Só abre se estiver fechado
     if (!chatModal.classList.contains('wf8731-active')) {
         chatModal.classList.add('wf8731-active');
+
+        if (triggerType.includes("phone")) {
+            whatsappInput.ariaPlaceholder = "Seu telefone"
+            welcomeMessage.innerText = "Estamos disponíveis 24 horas! ✅ Preencha os campos abaixo e ligue para nós agora mesmo para garantir a sua homenagem 💚"
+            submitBtn.querySelector(".wf8731-btn-text").innerText = "Ligar agora"
+        }
+        else {
+            whatsappInput.ariaPlaceholder = "Número do WhatsApp"
+            welcomeMessage.innerText = "Estamos disponíveis 24 horas! ✅ Preencha os campos abaixo e vamos te chamar agora mesmo para garantir a sua homenagem 💚"
+            submitBtn.querySelector(".wf8731-btn-text").innerText = "Enviar"
+        }
+
+        triggerInput.value = triggerType
+
         badge.style.display = 'none';
         onlineIndicator.style.display = 'none';
 
@@ -47,7 +69,7 @@ window.openWf8731Modal = function () {
     }
 }
 
-whatsappButton.addEventListener('click', openWf8731Modal);
+whatsappButton.addEventListener('click', () => openWf8731Modal("floating_button"));
 
 // Fechar modal
 closeBtn.addEventListener('click', () => {
@@ -62,7 +84,13 @@ function validateEmail(email) {
 
 function validatePhone(phone) {
     const cleaned = phone.replace(/\D/g, '');
-    return cleaned.length === 10 || cleaned.length === 11;
+    const countryCode = countrySelect.value;
+
+    if (countryCode === '55') {
+        return cleaned.length === 10 || cleaned.length === 11;
+    }
+
+    return cleaned.length >= 7 && cleaned.length <= 15;
 }
 
 // Limpar erro ao digitar
@@ -76,37 +104,42 @@ emailInput.addEventListener('input', () => {
     emailError.classList.remove('wf8731-show');
 });
 
+countrySelect.addEventListener('change', function () {
+    whatsappInput.value = '';
+    whatsappInput.classList.remove('wf8731-input-error');
+    whatsappError.classList.remove('wf8731-show');
+});
+
 whatsappInput.addEventListener('input', function (e) {
     whatsappInput.classList.remove('wf8731-input-error');
     whatsappError.classList.remove('wf8731-show');
 
-    // Formatar telefone
+    const countryCode = countrySelect.value;
     let cleaned = e.target.value.replace(/\D/g, '');
-    let formatted = '';
 
-    if (!cleaned) formatted = ''
-    else if (cleaned.length <= 2) {
-        formatted = `(${cleaned.slice(0, 2)}`;
-    } else if (cleaned.length <= 6) {
 
-        formatted = `(${cleaned.slice(0, 2)}) ${cleaned.slice(
-            2
-        )}`;
-    } else if (cleaned.length <= 10) {
-        const rest = cleaned.slice(2);
-
-        formatted = `(${cleaned.slice(
-            0,
-            2
-        )}) ${rest.slice(0, 4)}-${rest.slice(4)}`;
+    if (countryCode === '55') {
+        let formatted = '';
+        if (!cleaned) formatted = ''
+        else if (cleaned.length <= 2) {
+            formatted = `(${cleaned.slice(0, 2)}`;
+        } else if (cleaned.length <= 6) {
+            formatted = `(${cleaned.slice(0, 2)}) ${cleaned.slice(2)}`;
+        } else if (cleaned.length <= 10) {
+            const rest = cleaned.slice(2);
+            formatted = `(${cleaned.slice(0, 2)}) ${rest.slice(0, 4)}-${rest.slice(4)}`;
+        } else {
+            const firstDigit = cleaned.slice(2, 3);
+            const middle = cleaned.slice(3, 7);
+            const last = cleaned.slice(7, 11);
+            formatted = `(${cleaned.slice(0, 2)}) ${firstDigit}${middle}-${last}`;
+        }
+        e.target.value = formatted;
+        window.wf8731Phone = '+' + countryCode + cleaned
     } else {
-        const firstDigit = cleaned.slice(2, 3);
-        const middle = cleaned.slice(3, 7);
-        const last = cleaned.slice(7, 11);
-        formatted = `(${cleaned.slice(0, 2)}) ${firstDigit}${middle}-${last}`;
+        e.target.value = cleaned.slice(0, 15);
+        window.wf8731Phone = '+' + countryCode + cleaned
     }
-
-    e.target.value = formatted;
 });
 
 // Função para resetar o formulário
@@ -164,12 +197,13 @@ contactForm.addEventListener('submit', async (e) => {
 
     errorMessage.style.display = null
 
-    const phone = whatsappInput.value.replace(/\D/g, "")
+    const phone = countrySelect.value + whatsappInput.value.replace(/\D/g, "")
 
     const formData = {
+        formId: triggerInput.value,
         name: nameInput.value,
         email: emailInput.value,
-        phone: "55" + phone,
+        phone: phone,
         campaignData: campaignDataInput.value,
         sourceData: sourceDataInput.value
     };
@@ -197,6 +231,13 @@ contactForm.addEventListener('submit', async (e) => {
 
         submitBtn.classList.add('wf8731-success');
 
+        whatsAppGtmTrigger.click()
+        phoneGtmTrigger.click()
+
+        if (formData.formId.includes("phone_3003")) window.open("tel:30037271")
+        else if (formData.formId.includes("phone_0800")) window.open("tel:08000020001")
+
+        successMessage.innerText = "✨ Em poucos segundos você terá um consultor nosso cuidando de tudo por você."
         successMessage.classList.add('wf8731-show');
     } catch (error) {
         console.error('Erro:', error);
@@ -222,18 +263,32 @@ document.addEventListener('keydown', function (e) {
     }
 });
 
-const whatsappLinks = document.querySelectorAll('[wf8731="waform_button"]');
+function handleFooterLinks(footer) {
+    const footerLinks = footer.querySelectorAll("a")
 
-whatsappLinks.forEach(link => {
-    link.addEventListener("click", () => console.log("Old element"))
-    // Verificar se não é o próprio botão flutuante
-    if (!link.closest('.wf8731-container')) {
-        const newWaButton = link.cloneNode(true)
-        link.parentNode.replaceChild(newWaButton, link)
-        newWaButton.addEventListener('click', function (e) {
+    footerLinks.forEach((link) => {
+        link.addEventListener("click", function (e) {
+            e.preventDefault()
+            e.stopPropagation()
+            const innerText = link.innerText.toLowerCase()
+            if (innerText.includes("whatsapp")) window.openWf8731Modal("footer_whatsapp")
+            else if (innerText.includes("3003")) window.openWf8731Modal("footer_phone_3003")
+            else if (innerText.includes("0800")) window.openWf8731Modal("footer_phone_0800")
+        })
+    })
+}
+
+const allButtonForm = document.querySelectorAll('[wf8731]');
+
+allButtonForm.forEach(bForm => {
+    const clone = bForm.cloneNode(true)
+    bForm.parentNode.replaceChild(clone, bForm)
+    const triggerType = clone.getAttribute("wf8731")
+    if (triggerType === "footer") handleFooterLinks(clone)
+    else
+        clone.addEventListener('click', function (e) {
             e.preventDefault();
             e.stopPropagation();
-            openWf8731Modal();
+            window.openWf8731Modal(triggerType);
         });
-    }
 });
