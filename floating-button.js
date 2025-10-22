@@ -1,7 +1,8 @@
 const WEBHOOK_URL = 'https://app-nobre-coroas-de-flores.vercel.app/api/webhooks/whatsapp-form';
 
 const whatsAppGtmTrigger = document.getElementById("wf8731WhatsAppGtmTrigger")
-const phoneGtmTrigger = document.getElementById("wf8731PhoneGtmTrigger")
+const phone0800GtmTrigger = document.getElementById("wf8731Phone0800GtmTrigger")
+const phone3003GtmTrigger = document.getElementById("wf8731Phone3003GtmTrigger")
 
 const whatsappButton = document.getElementById('wf8731Button');
 const chatModal = document.getElementById('wf8731Modal');
@@ -38,12 +39,12 @@ window.openWf8731Modal = function (triggerType) {
         chatModal.classList.add('wf8731-active');
 
         if (triggerType.includes("phone")) {
-            whatsappInput.ariaPlaceholder = "Seu telefone"
+            whatsappInput.placeholder = "Seu telefone"
             welcomeMessage.innerText = "Estamos disponíveis 24 horas! ✅ Preencha os campos abaixo e ligue para nós agora mesmo para garantir a sua homenagem 💚"
             submitBtn.querySelector(".wf8731-btn-text").innerText = "Ligar agora"
         }
         else {
-            whatsappInput.ariaPlaceholder = "Número do WhatsApp"
+            whatsappInput.placeholder = "Número do WhatsApp"
             welcomeMessage.innerText = "Estamos disponíveis 24 horas! ✅ Preencha os campos abaixo e vamos te chamar agora mesmo para garantir a sua homenagem 💚"
             submitBtn.querySelector(".wf8731-btn-text").innerText = "Enviar"
         }
@@ -231,11 +232,15 @@ contactForm.addEventListener('submit', async (e) => {
 
         submitBtn.classList.add('wf8731-success');
 
-        whatsAppGtmTrigger.click()
-        phoneGtmTrigger.click()
 
-        if (formData.formId.includes("phone_3003")) window.open("tel:30037271")
-        else if (formData.formId.includes("phone_0800")) window.open("tel:08000020001")
+
+        if (formData.formId.includes("phone_3003")) {
+            phone3003GtmTrigger.click()
+            window.open("tel:30037271")
+        } else if (formData.formId.includes("phone_0800")) {
+            phone0800GtmTrigger.click()
+            window.open("tel:08000020001")
+        } else whatsAppGtmTrigger.click()
 
         successMessage.innerText = "✨ Em poucos segundos você terá um consultor nosso cuidando de tudo por você."
         successMessage.classList.add('wf8731-show');
